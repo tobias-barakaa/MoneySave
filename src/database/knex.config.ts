@@ -3,8 +3,7 @@ import { Knex } from 'knex';
 const config: Knex.Config = {
   client: 'pg',
   connection: {
-    // connectionString: process.env.DATABASE_URL,
-    connectionString: process.env.DATABASE_URL || '',
+    connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false },
   },
   migrations: {
@@ -16,12 +15,36 @@ const config: Knex.Config = {
   },
   pool: {
     min: 1,
-    max: 5, // Neon has connection limits, keep it lower
+    max: 5,
   },
   acquireConnectionTimeout: 60000,
 };
 
 export default config;
+// import { Knex } from 'knex';
+
+// const config: Knex.Config = {
+//   client: 'pg',
+//   connection: {
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: { rejectUnauthorized: false },
+//   },
+//   migrations: {
+//     directory: './src/database/migrations',
+//     extension: 'ts',
+//   },
+//   seeds: {
+//     directory: './src/database/seeds',
+//   },
+//   pool: {
+//     min: 1,
+//     max: 5, // Neon has connection limits, keep it lower
+//   },
+//   acquireConnectionTimeout: 60000,
+// };
+
+// export default config;
+
 
 
 

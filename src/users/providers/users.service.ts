@@ -5,41 +5,45 @@ import { CreateUserDto } from '../dtos/create-user.dto';
 import { PatchUserDto } from '../dtos/patch-user.dto';
 import { User } from '../interfaces/user.interface';
 import * as bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UsersSevice {
   constructor(
     @Inject(DATABASE_CONNECTION) private readonly knex: Knex,
+
+
+    // injecting configService to access environment variables
+    private readonly configService: ConfigService,
   ) {}
 
-  async createUser(createUserDto: CreateUserDto): Promise<User> {
+  async createUser(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
     const { email, firstName, lastName, password } = createUserDto;
-
-    // Check if user already exists
-    const existingUser = await this.knex('users').where('email', email).first();
+  const environment = this.configService.get<string>('DB_HOST');
+  console.log(`Current environment: ${environment}`);
+    // 1. Check if user exists
+    const existingUser = await this.knex('users').where({ email }).first();
     if (existingUser) {
       throw new ConflictException('User with this email already exists');
     }
-
-    // Hash password
+  
+    // 2. Hash password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    // Insert user
-    const [userId] = await this.knex('users').insert({
-      email,
-      firstName,
-      lastName,
-      password: hashedPassword,
-    });
-
-    // Return created user (without password)
-    const user = await this.knex('users')
-      .select('id', 'email', 'firstName', 'lastName', 'createdAt', 'updatedAt')
-      .where('id', userId)
-      .first();
-
-    return user;
+  
+    // 3. Insert and return inserted user
+    const [user] = await this.knex<User>('users')
+      .insert({
+        email,
+        firstName,
+        lastName,
+        password: hashedPassword,
+      })
+      .returning('*');
+  
+    // 4. Remove password from response
+    const { password: _, ...safeUser } = user;
+    return safeUser;
   }
 
   async findAllUsers(): Promise<User[]> {

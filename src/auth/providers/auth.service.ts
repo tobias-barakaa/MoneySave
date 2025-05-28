@@ -11,12 +11,12 @@ export class AuthService {
         private readonly usersService: UsersSevice
     ){}
 
-    public login(email: string, password: string) {
-        const user = this.usersService.findOneById(123)
+    // public login(email: string, password: string) {
+    //     const user = this.usersService.findOneById(123)
 
-        return 'SAMPLE_TOKEN'
+    //     return 'SAMPLE_TOKEN'
 
-    }
+    // }
 
     public isAuth() {
         return true;

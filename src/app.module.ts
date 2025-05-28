@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -6,9 +7,41 @@ import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 
+const ENV = process.env.NODE_ENV || 'development';
+
 @Module({
-  imports: [UsersModule, PostsModule, AuthModule, DatabaseModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ENV === 'development' ? '.env.development' : '.env',
+    }),
+    DatabaseModule,
+    UsersModule,
+    PostsModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+// import { Module } from '@nestjs/common';
+// import { AppController } from './app.controller';
+// import { AppService } from './app.service';
+// import { UsersModule } from './users/users.module';
+// import { PostsModule } from './posts/posts.module';
+// import { AuthModule } from './auth/auth.module';
+// import { DatabaseModule } from './database/database.module';
+// import { ConfigModule } from '@nestjs/config';
+
+// const ENV = process.env.NODE_ENV || 'development';
+
+// @Module({
+//   imports: [
+//     ConfigModule.forRoot({
+//       isGlobal: true,
+//       envFilePath: !ENV ? '.env' : `.env.${ENV}`,
+//     }), UsersModule, PostsModule, AuthModule, DatabaseModule],
+//   controllers: [AppController],
+//   providers: [AppService],
+// })
+// export class AppModule {}
