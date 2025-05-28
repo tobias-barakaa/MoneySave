@@ -5,6 +5,8 @@ import {Knex} from 'knex';
 import { UsersSevice } from 'src/users/providers/users.service';
 import { HashingProvider } from './hashing.provider';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigType } from '@nestjs/config';
+import jwtConfig from '../config/jwt.config';
 
 @Injectable()
 export class SignInProvider {
@@ -25,7 +27,13 @@ export class SignInProvider {
          * Inject jwt service
          */
 
-        private readonly jwtService: JwtService
+        private readonly jwtService: JwtService,
+
+        /**
+         * Inject Jwtconfiguration
+         */
+        @Inject(jwtConfig.KEY)
+        private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
     ) {}
     public async signIn(signInDto: SignInDto)  {
         let user = await this.usersService.findOneByEmail(signInDto.email);
@@ -42,7 +50,25 @@ export class SignInProvider {
             throw new UnauthorizedException('Invalid credentials', {description: 'Password does not match'});
         }
 
-        return true;
+
+
+    const accessToken = await this.jwtService.signAsync({
+        sub: user.id,
+        email: user.email,
+
+    },
+{
+    audience: this.jwtConfiguration.audience,
+    issuer: this.jwtConfiguration.issuer,
+    expiresIn: this.jwtConfiguration.accessTokenTtl,
+    secret: this.jwtConfiguration.secret,
+
+})
+
+
+        return {
+            accessToken
+        };
     
 
     }

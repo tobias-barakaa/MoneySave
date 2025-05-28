@@ -18,7 +18,8 @@ import { JwtModule } from '@nestjs/jwt';
     provide: HashingProvider,
     useClass: BcryptProvider, // Using BcryptProvider as the implementation of HashingProvider
   }, SignInProvider],
-  imports: [forwardRef(() => UsersModule), ConfigModule.forFeature(appConfig), JwtModule.registerAsync(jwtConfig.asProvider())],
+  // imports: [forwardRef(() => UsersModule), ConfigModule.forFeature(appConfig, jwtConfig), JwtModule.registerAsync(jwtConfig.asProvider())],
+  imports: [forwardRef(() => UsersModule), ConfigModule.forFeature(jwtConfig),JwtModule.registerAsync(jwtConfig.asProvider()) ],
   exports: [AuthService, HashingProvider], // Exporting the service so it can be used in other modules
 })
 export class AuthModule {}
