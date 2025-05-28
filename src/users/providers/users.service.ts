@@ -5,7 +5,8 @@ import { CreateUserDto } from '../dtos/create-user.dto';
 import { PatchUserDto } from '../dtos/patch-user.dto';
 import { User } from '../interfaces/user.interface';
 import * as bcrypt from 'bcrypt';
-import { ConfigService } from '@nestjs/config';
+import { ConfigService, ConfigType } from '@nestjs/config';
+import profileConfig from '../config/profile.config';
 
 @Injectable()
 export class UsersSevice {
@@ -14,13 +15,15 @@ export class UsersSevice {
 
 
     // injecting configService to access environment variables
-    private readonly configService: ConfigService,
+    // private readonly configService: ConfigService,
+
+    @Inject(profileConfig.KEY)
+    private readonly profileConfiguration: ConfigType<typeof profileConfig>
   ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
     const { email, firstName, lastName, password } = createUserDto;
-  const environment = this.configService.get<string>('DB_HOST');
-  console.log(`Current environment: ${environment}`);
+  console.log(this.profileConfiguration, 'profileConfiguration..................................');
     // 1. Check if user exists
     const existingUser = await this.knex('users').where({ email }).first();
     if (existingUser) {
