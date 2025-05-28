@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
+import environmentValidation from './config/environment.validation';
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -16,7 +17,8 @@ const ENV = process.env.NODE_ENV || 'development';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ENV === 'development' ? '.env.development' : '.env',
-      load: [appConfig, databaseConfig]
+      load: [appConfig, databaseConfig],
+      validationSchema: environmentValidation,
     }),
     DatabaseModule,
     UsersModule,
