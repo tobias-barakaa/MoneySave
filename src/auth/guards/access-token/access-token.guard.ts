@@ -23,14 +23,15 @@ export class AccessTokenGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
-    const token = request.headers.authorization?.split(' ')[1]; // Assuming Bearer token format
+    const token = this.extractRequestFromHeader(request); // Assuming Bearer token format
     // Extract the request from the execution context 
     // extract the token from the header
     // validate the token
     return true;
   }
 
-  private extractRequestFromHeader(request: Request) {
-    const [_, token] = request.headers.authorization?.split(' ') || [];
+  private extractRequestFromHeader(request: Request): string | undefined {
+    const [_, token] = request.headers.authorization?.split(' ') ?? [];
+    return token;
   }
 }
