@@ -1,5 +1,6 @@
 import { Injectable, forwardRef, Inject } from '@nestjs/common';
 import { UsersSevice } from 'src/users/providers/users.service';
+import { SignInDto } from '../dtos/signin.dto';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +21,13 @@ export class AuthService {
 
     public isAuth() {
         return true;
+    }
+
+    public signIn(signInDto: SignInDto) {
+        // Find the user using email ID
+        // Throw an exception ifuser not found
+        // compare the password with the hashed password
+        // send confirmation if they match
     }
 
 }
