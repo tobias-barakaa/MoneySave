@@ -1,8 +1,10 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, RequestTimeoutException, UnauthorizedException } from '@nestjs/common';
 import { SignInDto } from '../dtos/signin.dto';
 import { DATABASE_CONNECTION } from 'src/database/database.constants';
 import {Knex} from 'knex';
 import { UsersSevice } from 'src/users/providers/users.service';
+import { HashingProvider } from './hashing.provider';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class SignInProvider {
@@ -14,9 +16,33 @@ export class SignInProvider {
 
         @Inject(forwardRef(() => UsersSevice))
         private readonly usersService: UsersSevice,
+
+        /**
+         * Inject hashing provider
+         */
+        private readonly hashingProvider: HashingProvider,
+        /**
+         * Inject jwt service
+         */
+
+        private readonly jwtService: JwtService
     ) {}
     public async signIn(signInDto: SignInDto)  {
         let user = await this.usersService.findOneByEmail(signInDto.email);
+
+        let isEqual: boolean = false;
+
+        try {
+            isEqual = await this.hashingProvider.comparePassword(signInDto.password, user.password)
+        } catch (error) {
+            throw new RequestTimeoutException( error, {description:'Error while comparing passwords' });
+            
+        }
+        if (!isEqual) {
+            throw new UnauthorizedException('Invalid credentials', {description: 'Password does not match'});
+        }
+
+        return true;
     
 
     }
