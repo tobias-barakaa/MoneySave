@@ -8,6 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { ConfigService, ConfigType } from '@nestjs/config';
 import profileConfig from '../config/profile.config';
 import { CreateUserProvider } from './create-user.provider';
+import { FindOneUserByEmailProvider } from './find-one-user-by-email.provider';
 
 @Injectable()
 export class UsersSevice {
@@ -25,6 +26,11 @@ export class UsersSevice {
      * Inject createUserProvider
      */
     private readonly createUserProvider: CreateUserProvider,
+
+    /**
+     * Inject FindOneUserByEmailProvider
+     */
+    private readonly findOneUserByEmailProvider: FindOneUserByEmailProvider,
   ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
@@ -87,6 +93,10 @@ export class UsersSevice {
     if (deletedCount === 0) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
+  }
+
+  public async findOneByEmail(email: string) {
+    return await this.findOneUserByEmailProvider.findOneUserByEmail(email);
   }
 }
 // import { BadRequestException, Inject, Injectable, RequestTimeoutException, forwardRef } from '@nestjs/common';
