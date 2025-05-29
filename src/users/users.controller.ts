@@ -9,11 +9,14 @@ import {
     ParseIntPipe,
     HttpCode,
     HttpStatus,
+    UseGuards,
+    SetMetadata,
   } from '@nestjs/common';
   import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
   import { CreateUserDto } from './dtos/create-user.dto';
   import { PatchUserDto } from './dtos/patch-user.dto';
 import { UsersSevice } from './providers/users.service';
+import { AccessTokenGuard } from 'src/auth/guards/access-token/access-token.guard';
   
   @ApiTags('Users')
   @Controller('users')
@@ -21,6 +24,7 @@ import { UsersSevice } from './providers/users.service';
     constructor(private readonly usersService: UsersSevice) {}
   
     @Post()
+    @SetMetadata('authType', 'none')
     @ApiOperation({ summary: 'Create a new user' })
     @ApiResponse({ status: 201, description: 'User created successfully' })
     @ApiResponse({ status: 409, description: 'User already exists' })
@@ -60,6 +64,7 @@ import { UsersSevice } from './providers/users.service';
     @ApiOperation({ summary: 'Delete user' })
     @ApiResponse({ status: 204, description: 'User deleted successfully' })
     @ApiResponse({ status: 404, description: 'User not found' })
+    
     async deleteUser(@Param('id', ParseIntPipe) id: number) {
       return this.usersService.deleteUser(id);
     }

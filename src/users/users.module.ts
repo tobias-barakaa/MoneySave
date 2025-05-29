@@ -6,13 +6,27 @@ import { ConfigModule } from '@nestjs/config';
 import { CreateUserProvider } from './providers/create-user.provider';
 import { FindOneUserByEmailProvider } from './providers/find-one-user-by-email.provider';
 import profileConfig from './config/profile.config';
+import jwtConfig from 'src/auth/config/jwt.config';
+import { JwtModule } from '@nestjs/jwt';
+import { APP_GUARD } from '@nestjs/core';
+import { AccessTokenGuard } from 'src/auth/guards/access-token/access-token.guard';
 
 @Module({
   controllers: [UsersController],
-    providers: [UsersSevice, CreateUserProvider, FindOneUserByEmailProvider],
+    providers: [UsersSevice, CreateUserProvider, FindOneUserByEmailProvider,
+      {
+        provide: APP_GUARD,
+        useClass: AccessTokenGuard
+      }
+    ],
     exports: [UsersSevice], // Exporting the service so it can be used in other modules
     imports: [forwardRef(() => AuthModule),
-        ConfigModule.forFeature(profileConfig)
+        ConfigModule.forFeature(profileConfig),
+
+
+         ConfigModule.forFeature(jwtConfig),
+          JwtModule.registerAsync(jwtConfig.asProvider())
+
     ]
 })
 export class UsersModule {}

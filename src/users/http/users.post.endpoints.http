@@ -2,10 +2,10 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "email": "john.dfsdf@point.com",
-    "firstName": "poidfdfndfdst2",
-    "lastName": "poinddfdfdt3",
-    "password": "234f3fdfdfgdsf43334f!"
+    "email": "john.dfssdfdsf@point.com",
+    "firstName": "poiddffdsfndfdst2",
+    "lastName": "poinddfdfsdfdt3",
+    "password": "234f3fdfdfdfgdsf43334f!"
 
 }
     
