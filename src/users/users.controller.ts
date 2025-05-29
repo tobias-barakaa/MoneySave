@@ -32,7 +32,7 @@ import { AuthType } from 'src/auth/enums/auth-type.enum';
     @ApiResponse({ status: 201, description: 'User created successfully' })
     @ApiResponse({ status: 409, description: 'User already exists' })
     async createUser(@Body() createUserDto: CreateUserDto) {
-        console.log(createUserDto, 'createUserDto..................................');
+        // console.log(createUserDto, 'createUserDto..................................');
       return this.usersService.createUser(createUserDto);
     }
   

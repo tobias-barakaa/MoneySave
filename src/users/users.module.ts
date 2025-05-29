@@ -14,18 +14,13 @@ import { AccessTokenGuard } from 'src/auth/guards/access-token/access-token.guar
 @Module({
   controllers: [UsersController],
     providers: [UsersSevice, CreateUserProvider, FindOneUserByEmailProvider,
-      {
-        provide: APP_GUARD,
-        useClass: AccessTokenGuard
-      }
+      
     ],
     exports: [UsersSevice], // Exporting the service so it can be used in other modules
     imports: [forwardRef(() => AuthModule),
         ConfigModule.forFeature(profileConfig),
 
 
-         ConfigModule.forFeature(jwtConfig),
-          JwtModule.registerAsync(jwtConfig.asProvider())
 
     ]
 })
