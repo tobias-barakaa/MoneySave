@@ -17,6 +17,8 @@ import {
   import { PatchUserDto } from './dtos/patch-user.dto';
 import { UsersSevice } from './providers/users.service';
 import { AccessTokenGuard } from 'src/auth/guards/access-token/access-token.guard';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { AuthType } from 'src/auth/enums/auth-type.enum';
   
   @ApiTags('Users')
   @Controller('users')
@@ -24,7 +26,8 @@ import { AccessTokenGuard } from 'src/auth/guards/access-token/access-token.guar
     constructor(private readonly usersService: UsersSevice) {}
   
     @Post()
-    @SetMetadata('authType', 'none')
+    // @SetMetadata('authType', 'none')
+    @Auth(AuthType.None)
     @ApiOperation({ summary: 'Create a new user' })
     @ApiResponse({ status: 201, description: 'User created successfully' })
     @ApiResponse({ status: 409, description: 'User already exists' })
