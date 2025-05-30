@@ -48,6 +48,7 @@ export class UsersSevice {
       .select('id', 'email', 'firstName', 'lastName', 'createdAt', 'updatedAt')
       .where('id', id)
       .first();
+      console.log(user.id, 'user id..................................................');
 
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);

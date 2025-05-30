@@ -44,12 +44,14 @@ export class RefreshTokenProvider {
                 issuer: this.jwtConfiguration.issuer,
                 
             })
+            console.log('sub in refresh token provider:', sub);
 
             const user = await this.usersService.findUserById(sub);
+            console.log('user in refresh token provider:', user);
 
             return await this.generateTokensProvider.generateTokens(user);
         } catch (error) {
-            throw new Error('Invalid refresh token');
+            throw new Error('Invalid refresh token', error);
             
         }
 

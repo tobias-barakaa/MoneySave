@@ -30,6 +30,7 @@ export class AuthController {
     @Auth(AuthType.None)
     // @UseGuards(AccessTokenGuard)
     public async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
+        console.log('refreshTokenDto......:', refreshTokenDto);
         return this.authService.refreshTokens(refreshTokenDto);
     }
 

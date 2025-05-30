@@ -41,6 +41,7 @@ export class AuthService {
     }
 
     public async refreshTokens(refreshTokenDto: RefreshTokenDto) {
+        console.log('refreshTokenDto......:::::::::::::', refreshTokenDto);
         // Verify the refresh token
         // Fetch the user from the database
         // Generate new tokens

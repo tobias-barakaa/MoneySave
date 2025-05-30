@@ -18,19 +18,22 @@ export class GenerateTokensProvider {
     public async signToken<T>(userId: number, expiresIn: number, payload?:T) {
         return await this.jwtService.signAsync(
             {
-                userId,
+                sub: userId,
                 ...payload,
             },
             {
                 audience: this.jwtConfiguration.audience,
                 issuer: this.jwtConfiguration.issuer,
-                expiresIn: expiresIn,
                 secret: this.jwtConfiguration.secret,
+                expiresIn
+
             },
         );
     }
 
     public async generateTokens(user: User) {
+        console.log(user, 'user in generate tokens provider..................................................');
+        console.log(user.id, 'user id in generate tokens provider..................................................');
 if (user.id === undefined) {
     throw new Error('User ID is undefined');
 }
@@ -41,7 +44,7 @@ const [accessToken, refreshToken] = await Promise.all([
         email: user.email,
     }),
     // Generate the Refresh Token
-    this.signToken(user.id, this.jwtConfiguration.refreshTokenTtl)
+    this.signToken(user.id, this.jwtConfiguration.refreshTokenTtl, { email: user.email })
 ]);
 return {
     accessToken,
