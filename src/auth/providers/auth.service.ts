@@ -9,12 +9,7 @@ import { RefreshTokenProvider } from './refresh-token.provider';
 @Injectable()
 export class AuthService {
     constructor(
-        /**
-         * Injectng services
-         */
-        @Inject(forwardRef(() => UsersSevice))
-        private readonly usersService: UsersSevice,
-
+       
         /**
          * Inject SignInProvider
          */

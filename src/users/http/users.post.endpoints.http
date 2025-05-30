@@ -1,9 +1,9 @@
 POST http://localhost:3000/users
 Content-Type: application/json
-Authorization Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImVtYWlsIjoiam9obi5kZnNkZkBwb2ludC5jb20iLCJpYXQiOjE3NDg1MjU0NTUsImV4cCI6MTc0ODUyOTA1NSwiYXVkIjoibG9jYWxob3N0OjMwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6MzAwMCJ9.Kw8RDuycBdqccYa6cMiTLfdTSv3Xqyy44mQU5W7ReDY
+
 
 {
-    "email": "dfwe@what's.com",
+    "email": "dfwe@what.com",
     "firstName": "fsewdfsdfse",
     "lastName": "poindsdfdfdfsdfdt3",
     "password": "sdfsfet345!"

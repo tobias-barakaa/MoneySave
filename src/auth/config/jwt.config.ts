@@ -21,3 +21,10 @@ export default registerAs('jwt', () => {
   
   return config;
 });
+
+
+
+audience: this.jwtConfiguration.audience,
+                issuer: this.jwtConfiguration.issuer,
+                expiresIn: expiresIn,
+                secret: this.jwtConfiguration.secret,

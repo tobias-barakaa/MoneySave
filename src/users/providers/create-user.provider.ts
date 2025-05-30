@@ -40,7 +40,6 @@ const { email, firstName, lastName, password } = createUserDto;
     }
   
     // 2. Hash password
-    const saltRounds = 10;
     const hashedPassword = await this.hashingProvider.hashPassword(createUserDto.password)
   
     // 3. Insert and return inserted user
