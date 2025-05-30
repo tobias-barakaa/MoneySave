@@ -9,6 +9,6 @@ export default Joi.object({
     JWT_TOKEN_AUDIENCE: Joi.string().uri().required(),
     JWT_TOKEN_ISSUER: Joi.string().uri().required(),
     JWT_ACCESS_TOKEN_TTL: Joi.number().integer().min(60).default(3600), // Minimum 60 seconds
-    // JWT_ACCESS_TOKEN: Joi.number().required()
+    JWT_REFRESH_TOKEN_TTL: Joi.number().required()
 
 })

@@ -1,22 +1,30 @@
 // import { Injectable, NotFoundException } from '@nestjs/common';
-// import { REQUEST_USER_KEY } from './auth/constants/auth.constants';
-// // import { Post } from './entities/post.entity';
-// // import { CreatePostDto } from './dto/create-post.dto';
-// // import { UpdatePostDto } from './dto/update-post.dto';
+// import { Post } from './entities/post.entity';
+// import { CreatePostDto } from './dto/create-post.dto';
+// import { UpdatePostDto } from './dto/update-post.dto';
+// import { ActiveUserData } from './auth/interfaces/active-user.interface';
 
 // @Injectable()
 // export class PostService {
 //   private posts: Post[] = [];
 //   private idCounter = 1;
 
-//   create(@Req() request): Post {
-//     console.log(request[REQUEST_USER_KEY])
-//     // const post: Post = {
-//     //   id: this.idCounter++,
-//     //   ...createPostDto,
-//     // };
-//     // this.posts.push(post);
-//     // return post;
+//   create(createPostDto: CreatePostDto, user: ActiveUserData): Post {
+  
+//     try {
+        
+//     } catch (error) {
+        
+//     }
+//     // @Body() createPostDto: CreatePostDto,
+//     // @ActiveUser() user: ActiveUserData,
+//     let author = await this.usersService.findOneById(user.sub);
+//     const post: Post = {
+//       id: this.idCounter++,
+//       ...createPostDto,
+//     };
+//     this.posts.push(post);
+//     return post;
 //   }
 
 //   findAll(): Post[] {
