@@ -1,7 +1,10 @@
+
 import { Injectable, forwardRef, Inject } from '@nestjs/common';
 import { UsersSevice } from 'src/users/providers/users.service';
 import { SignInDto } from '../dtos/signin.dto';
 import { SignInProvider } from './sign-in.provider';
+import { RefreshTokenDto } from '../dtos/refresh-token.dto';
+import { RefreshTokenProvider } from './refresh-token.provider';
 
 @Injectable()
 export class AuthService {
@@ -16,6 +19,11 @@ export class AuthService {
          * Inject SignInProvider
          */
         private readonly signInProvider: SignInProvider,
+
+        /**
+         * Inject RefreshTokensProvider
+         */
+        private readonly refreshTokensProvider: RefreshTokenProvider
     ){}
 
     // public login(email: string, password: string) {
@@ -35,6 +43,14 @@ export class AuthService {
         // Throw an exception ifuser not found
         // compare the password with the hashed password
         // send confirmation if they match
+    }
+
+    public async refreshTokens(refreshTokenDto: RefreshTokenDto) {
+        // Verify the refresh token
+        // Fetch the user from the database
+        // Generate new tokens
+        return await this.refreshTokensProvider.refreshTokens(refreshTokenDto);
+        // Throw an exception if the refresh token is invalid
     }
 
 }

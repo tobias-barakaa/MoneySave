@@ -1,12 +1,23 @@
-import { registerAs } from "@nestjs/config";
+// jwt.config.ts
+import { registerAs } from '@nestjs/config';
 
 export default registerAs('jwt', () => {
-    return {
-        secret: process.env.JWWT_SECRET,
-        audience: process.env.JWT_TOKEN_AUDIENCE,
-        issuer: process.env.JWT_TOKEN_ISSUER,
-        accessTokenTtl: parseInt(process.env.JWT_ACCESS_TOKEN_TTL || '3600'), // Default to 3600 
-        // seconds if undefined
-        refreshTokenTtl: parseInt(process.env.JWT_REFRESH_TOKEN_TTL ?? "604800", 10) // Default to 604800 seconds (7 days) if undefined
-    }
-})
+  const config = {
+    secret: process.env.JWT_SECRET,
+    audience: process.env.JWT_TOKEN_AUDIENCE,
+    issuer: process.env.JWT_TOKEN_ISSUER,
+    accessTokenTtl: parseInt(process.env.JWT_ACCESS_TOKEN_TTL ?? '3600', 10),
+    refreshTokenTtl: parseInt(process.env.JWT_REFRESH_TOKEN_TTL ?? '86400', 10),
+  };
+  
+  // Debug log (remove in production)
+  console.log('JWT Config loaded:', {
+    secret: config.secret ? '***SET***' : 'NOT SET',
+    audience: config.audience,
+    issuer: config.issuer,
+    accessTokenTtl: config.accessTokenTtl,
+    refreshTokenTtl: config.refreshTokenTtl,
+  });
+  
+  return config;
+});

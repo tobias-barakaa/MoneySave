@@ -12,13 +12,14 @@ import appConfig from 'src/config/app.config';
 import jwtConfig from './config/jwt.config';
 import { JwtModule } from '@nestjs/jwt';
 import { GenerateTokensProvider } from './providers/generate-tokens.provider';
+import { RefreshTokenProvider } from './providers/refresh-token.provider';
 
 @Module({
   controllers: [AuthController],
   providers: [AuthService, {
     provide: HashingProvider,
     useClass: BcryptProvider, // Using BcryptProvider as the implementation of HashingProvider
-  }, SignInProvider, GenerateTokensProvider],
+  }, SignInProvider, GenerateTokensProvider, RefreshTokenProvider],
   // imports: [forwardRef(() => UsersModule), ConfigModule.forFeature(appConfig, jwtConfig), JwtModule.registerAsync(jwtConfig.asProvider())],
   imports: [forwardRef(() => UsersModule), 
     ConfigModule.forFeature(jwtConfig),
