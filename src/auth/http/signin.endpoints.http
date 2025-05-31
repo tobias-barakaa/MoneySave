@@ -1,7 +1,2 @@
-POST http://localhost:3000/auth/sign-in
+POST http://localhost:3000/auth/google-authentication
 Content-Type: application/json
-
-{
-    "password": "sdfsfet345!",
-    "email": "dfwe@what.com"
-}
