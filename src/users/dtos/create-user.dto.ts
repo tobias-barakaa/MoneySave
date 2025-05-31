@@ -26,6 +26,15 @@ export class CreateUserDto {
   @IsNotEmpty()
   lastName: string;
 
+
+  @ApiProperty({
+    description: 'google id',
+    example: 'SecurePassword123!',
+  })
+  @IsString()
+  googleId?: string;
+
+
   @ApiProperty({
     description: 'User password',
     example: 'SecurePassword123!',
