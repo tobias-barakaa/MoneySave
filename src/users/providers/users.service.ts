@@ -9,6 +9,7 @@ import { ConfigService, ConfigType } from '@nestjs/config';
 import profileConfig from '../config/profile.config';
 import { CreateUserProvider } from './create-user.provider';
 import { FindOneUserByEmailProvider } from './find-one-user-by-email.provider';
+import { FindOneByGoogleIdProvider } from './find-one-by-google-id.provider';
 
 @Injectable()
 export class UsersSevice {
@@ -31,6 +32,9 @@ export class UsersSevice {
      * Inject FindOneUserByEmailProvider
      */
     private readonly findOneUserByEmailProvider: FindOneUserByEmailProvider,
+  
+    private readonly findOneByGoogleIdProvider: FindOneByGoogleIdProvider,
+  
   ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
@@ -98,6 +102,10 @@ export class UsersSevice {
 
   public async findOneByEmail(email: string) {
     return await this.findOneUserByEmailProvider.findOneUserByEmail(email);
+  }
+
+  public async findOneByGoogleId(googleId: string) {
+    return await this.findOneByGoogleIdProvider.findOneByGoogleId(googleId);
   }
 }
 // import { BadRequestException, Inject, Injectable, RequestTimeoutException, forwardRef } from '@nestjs/common';
