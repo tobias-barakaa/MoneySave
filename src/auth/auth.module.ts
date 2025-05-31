@@ -13,13 +13,15 @@ import jwtConfig from './config/jwt.config';
 import { JwtModule } from '@nestjs/jwt';
 import { GenerateTokensProvider } from './providers/generate-tokens.provider';
 import { RefreshTokenProvider } from './providers/refresh-token.provider';
+import { GoogleAuthenticationController } from './social/google-authentication.controller';
+import { GoogleAuthenticationService } from './social/providers/google-authentication.service';
 
 @Module({
-  controllers: [AuthController],
+  controllers: [AuthController, GoogleAuthenticationController],
   providers: [AuthService, {
     provide: HashingProvider,
     useClass: BcryptProvider, // Using BcryptProvider as the implementation of HashingProvider
-  }, SignInProvider, GenerateTokensProvider, RefreshTokenProvider],
+  }, SignInProvider, GenerateTokensProvider, RefreshTokenProvider, GoogleAuthenticationService],
   // imports: [forwardRef(() => UsersModule), ConfigModule.forFeature(appConfig, jwtConfig), JwtModule.registerAsync(jwtConfig.asProvider())],
   imports: [forwardRef(() => UsersModule), 
     ConfigModule.forFeature(jwtConfig),
