@@ -13,6 +13,14 @@ export class FindOneByGoogleIdProvider {
     ) {}
 
     public async findOneByGoogleId(googleId: string) {
-        return await this.knex('users').where({ googleId }).first();
+        console.log('Finding user by Google ID:', googleId);
+        const user = await this.knex('users')
+            .select('*')
+            .where({ googleId }) // ✅ use camelCase here
+            .first();
+    
+        console.log('User found::::::::::::::::::::::::', user);
+        return user; // no need to query twice
     }
+    
 }

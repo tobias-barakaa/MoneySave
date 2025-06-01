@@ -10,6 +10,8 @@ import profileConfig from '../config/profile.config';
 import { CreateUserProvider } from './create-user.provider';
 import { FindOneUserByEmailProvider } from './find-one-user-by-email.provider';
 import { FindOneByGoogleIdProvider } from './find-one-by-google-id.provider';
+import { CreateGoogleUserProvider } from './create-google-user.provider';
+import { GoogleUser } from '../interfaces/google-user.interface';
 
 @Injectable()
 export class UsersSevice {
@@ -34,6 +36,11 @@ export class UsersSevice {
     private readonly findOneUserByEmailProvider: FindOneUserByEmailProvider,
   
     private readonly findOneByGoogleIdProvider: FindOneByGoogleIdProvider,
+
+    /**
+     * private readonly createGoogleUser: createGoogleUser
+     */
+    private readonly createGoogleUserProvider: CreateGoogleUserProvider,
   
   ) {}
 
@@ -107,6 +114,17 @@ export class UsersSevice {
   public async findOneByGoogleId(googleId: string) {
     return await this.findOneByGoogleIdProvider.findOneByGoogleId(googleId);
   }
+
+  // public async createGoogleUser(googleUser: GoogleUser) {
+  //   return await this.createGoogleUserProvider.createGoogleUser(googleUser);
+  // }
+
+  public async createGoogleUser(googleUser: GoogleUser) {
+    // Implementation of user creation
+    return await this.createGoogleUserProvider.createGoogleUser(googleUser);// Assuming userRepository is used
+    
+}
+
 }
 // import { BadRequestException, Inject, Injectable, RequestTimeoutException, forwardRef } from '@nestjs/common';
 // import { CreateUserDto } from '../dtos/create-user.dto';

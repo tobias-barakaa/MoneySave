@@ -33,7 +33,7 @@ export class GenerateTokensProvider {
 
     public async generateTokens(user: User) {
         console.log(user, 'user in generate tokens provider..................................................');
-        console.log(user.id, 'user id in generate tokens provider..................................................');
+        // console.log(user.id, 'user id in generate tokens provider..................................................');
 if (user.id === undefined) {
     throw new Error('User ID is undefined');
 }
