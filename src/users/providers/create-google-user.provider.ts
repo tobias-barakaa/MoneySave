@@ -14,10 +14,15 @@ export class CreateGoogleUserProvider {
 
     public async createGoogleUser(googleUser: GoogleUser) {
         try {
-            const user = this.knex('users').insert({googleUser})
-            .returning('*');
+            console.log(googleUser, 'google useeerrrr....:..')
+            const user = this.knex('users').insert(googleUser)
+            return await user.returning('*'); // Insert the user and return the inserted record
         } catch (error) {
-            throw new Error(`Failed to create Google user: ${error.message}`);
+            throw new Error(`Failed to create Google user: ${error.message}`)
         }
     }
 }
+
+
+
+

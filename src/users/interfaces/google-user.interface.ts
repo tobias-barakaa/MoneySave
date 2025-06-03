@@ -3,4 +3,5 @@ export interface GoogleUser {
     firstName: string;
     lastName: string;
     googleId: string;
+    password: string;
 }

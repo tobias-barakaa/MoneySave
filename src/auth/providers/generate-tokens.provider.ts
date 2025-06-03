@@ -31,7 +31,11 @@ export class GenerateTokensProvider {
         );
     }
 
+   
     public async generateTokens(user: User) {
+        if (Array.isArray(user)) {
+            throw new Error('Expected single user object, but received an array');
+          }
         console.log(user, 'user in generate tokens provider..................................................');
         // console.log(user.id, 'user id in generate tokens provider..................................................');
 if (user.id === undefined) {

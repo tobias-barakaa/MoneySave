@@ -84,14 +84,26 @@ try {
     return this.generateTokensProvider.generateTokens(user);
 
    }
-   const newUser = await this.usersService.createGoogleUser({
-    email: email ?? (() => { throw new Error('Email is required'); })(),
-    firstName: firstName ?? (() => { throw new Error('First name is required'); })(),
-    lastName: lastName ?? (() => { throw new Error('Last name is required'); })(),
-    googleId: googleId
-   }) as unknown as User;
+   try {
+    const newUser = await this.usersService.createGoogleUser({
+      email: email ?? (() => { throw new Error('Email is required'); })(),
+      firstName: firstName ?? (() => { throw new Error('First name is required'); })(),
+      lastName: lastName ?? (() => { throw new Error('Last name is required'); })(),
+      googleId,
+      password: await bcrypt.hash(generateStrongPassword(), 10),
 
-   return this.generateTokensProvider.generateTokens(newUser);
+    }) as unknown as User;
+  
+    console.log('🆕 New Google user created:', newUser);
+  
+    return this.generateTokensProvider.generateTokens(newUser);
+  
+  } catch (error) {
+    console.error('❌ Error creating Google user:', error.message);
+    throw error;
+  }
+  
+
 } catch (err) {
     console.error('❌ Error during Google authentication:', err.message);
     throw err;
@@ -103,6 +115,9 @@ try {
 
 
 
+function generateStrongPassword(length = 16): string {
+  return randomBytes(length).toString('base64url'); // URL-safe
+}
 
 
 

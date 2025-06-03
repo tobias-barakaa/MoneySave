@@ -22,8 +22,8 @@ export class CreateUserDto {
     description: 'User last name',
     example: 'Doe',
   })
+  
   @IsString()
-  @IsNotEmpty()
   lastName: string;
 
 
