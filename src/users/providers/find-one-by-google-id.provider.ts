@@ -18,9 +18,9 @@ export class FindOneByGoogleIdProvider {
             .select('*')
             .where({ googleId }) // ✅ use camelCase here
             .first();
-    
-        console.log('User found::::::::::::::::::::::::', user);
-        return user; // no need to query twice
+            return user; // no need to query twice
     }
     
 }
+
+

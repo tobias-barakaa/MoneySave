@@ -31,7 +31,7 @@ constructor(
 
 async createUser(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
 
-const { email, firstName, lastName, password } = createUserDto;
+const { email, firstName, lastName } = createUserDto;
   console.log(this.profileConfiguration, 'profileConfiguration..................................');
     // 1. Check if user exists
     const existingUser = await this.knex('users').where({ email }).first();
